@@ -43,19 +43,29 @@ function makeWorldsBackup() {
 	cd -
 }
 
+function webDavUpload() {
+	local filePathToUpload=$1
+	local serverFileName=$2
+	local webdavAdress=$MC_BACKUP_WEBDAV_ADRESS
+	if [[ ! $MC_BACKUP_WEBDAV_HOST == http* ]]; then
+		echo "No protocol specified, assuming https"
+		webdavAdress="https://$webdavAdress"
+	fi
+	echo Uploading to $webdavAdress
+	curl --user $MC_BACKUP_WEBDAV_USER:$MC_BACKUP_WEBDAV_PASSWORD -T $filePathToUpload $webdavAdress/$serverFileName
+}
+
 while getopts s:o: arg; do
 	case "${arg}" in
 	s)
 		serverdir=$(realpath ${OPTARG})
-		if [ ! -d $serverdir ]; then
-			unset serverdir
-		fi
 		;;
 	o)
 		if ! outputdir=$(realpath ${OPTARG}); then
 			echo Invalid Output path
 			exit
 		fi
+		;;
 	esac
 done
 
@@ -69,3 +79,8 @@ else
 	makeWorldsBackup $filename
 fi
 echo created $filepath
+
+# upload to webdav server
+if [ ! -z $MC_BACKUP_WEBDAV_ADRESS ]; then
+	echo Uploading $filename to webdav server
+	webDavUpload $filepath $filename
