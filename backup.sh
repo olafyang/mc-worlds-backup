@@ -47,7 +47,7 @@ function webDavUpload() {
 	local filePathToUpload=$1
 	local serverFileName=$2
 	local webdavAdress=$MC_BACKUP_WEBDAV_ADRESS
-	if [[ ! $MC_BACKUP_WEBDAV_HOST == http* ]]; then
+	if [[ ! $webdavAdress == http* ]]; then
 		echo "No protocol specified, assuming https"
 		webdavAdress="https://$webdavAdress"
 	fi
@@ -84,3 +84,4 @@ echo created $filepath
 if [ ! -z $MC_BACKUP_WEBDAV_ADRESS ]; then
 	echo Uploading $filename to webdav server
 	webDavUpload $filepath $filename
+fi
