@@ -83,5 +83,5 @@ echo created $filepath
 # upload to webdav server
 if [ ! -z $MC_BACKUP_WEBDAV_ADRESS ]; then
 	echo Uploading $filename to webdav server
-	webDavUpload $filepath $filename
+	webDavUpload $filepath $filename.zip
 fi
