@@ -69,7 +69,7 @@ while getopts s:o: arg; do
 	esac
 done
 
-filename=mc-backup_$(date +"%Y-%mT%H:%M:%S")
+filename=mc-backup_$(date +"%Y-%m-%dT%H:%M:%S")
 if [ -z ${serverdir+x} ]; then
 	scriptPath=$(realpath .)
 	findWorlds $scriptPath
