@@ -45,4 +45,4 @@ The password for the given WebDAV server user.
 
 Example
 
-```export MC_BACKUP_WEBDAV_USER="password"```
+```export MC_BACKUP_WEBDAV_PASSWORD="password"```
