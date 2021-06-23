@@ -40,6 +40,10 @@ function makeWorldsBackup() {
 	filepath="$outputdir/$1.zip"
 	cd $serverdir
 	zip -r $filepath ${worlds[@]}
+
+	if [ ! $gpg_public ]; then
+		gpg --output $filepath.gpg --encrypt --recipient $gpg_public
+	fi
 	cd -
 }
 
@@ -65,6 +69,9 @@ while getopts s:o: arg; do
 			echo Invalid Output path
 			exit
 		fi
+		;;
+	e)
+		gpg_public = ${OPTARG}
 		;;
 	esac
 done
